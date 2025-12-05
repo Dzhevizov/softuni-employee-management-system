@@ -17,6 +17,14 @@ function App() {
     setShowCreateUser(false);
   };
 
+  const addUserSubmitHandler = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const userData = Object.fromEntries(formData);
+
+  };
+
   return (
     <>
       <Header />
@@ -32,7 +40,13 @@ function App() {
           <Pagination />
         </section>
 
-        {showCreateUser && <CreateUserModal onClose={closeUserModalHandler}/>}
+        {showCreateUser && 
+          <CreateUserModal 
+            onClose={closeUserModalHandler}
+            onSubmit={addUserSubmitHandler}
+          />
+        }
+
       </main>
 
       <Footer />
