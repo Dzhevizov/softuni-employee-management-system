@@ -46,5 +46,21 @@
       "street": "456 Elm St",
       "streetNumber": "7"
     }
+  },
+  "c941fe6a-03a3-4780-a0b5-a780ae5ff480": {
+    "_id": "c941fe6a-03a3-4780-a0b5-a780ae5ff480",
+    "firstName": "Jessica",
+    "lastName": "Alba",
+    "email": "jess@yahoo.com",
+    "phoneNumber": "6545613564",
+    "createdAt": "2025-12-01T07:22:00.358Z",
+    "updatedAt": "2025-12-01T07:22:00.358Z",
+    "imageUrl": "https://i.pinimg.com/originals/95/e3/c6/95e3c6646db9b09e9af3723b555bc2b4.png",
+    "address": {
+      "country": "USA",
+      "city": "Los Angeles",
+      "street": "gdgd",
+      "streetNumber": "1"
+    }
   }
 }
