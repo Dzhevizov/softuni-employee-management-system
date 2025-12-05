@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react";
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Pagination from "./components/Pagination"
@@ -8,6 +8,16 @@ import CreateUserModal from "./components/CreateUserModal"
 
 function App() {
   const [showCreateUser, setShowCreateUser] = useState(false);
+  const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+      fetch('http://localhost:3030/jsonstore/users')
+        .then(response => response.json())
+        .then(data => {
+            setUsers(Object.values(data));
+        })
+        .catch(err => alert(err.message));
+    }, []);
 
   const addUserClickHandler = () => {
     setShowCreateUser(true);
@@ -54,7 +64,7 @@ function App() {
         <section className="card users-container">
           <SearchForm />
 
-          <UserList />
+          <UserList users={users}/>
 
           <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
 
