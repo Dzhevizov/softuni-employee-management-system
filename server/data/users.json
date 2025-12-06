@@ -62,5 +62,21 @@
       "street": "gdgd",
       "streetNumber": "1"
     }
+  },
+  "fbc5be85-8c59-40e6-b101-1c2beb7543f3": {
+    "firstName": "Anya",
+    "lastName": "Taylor-Joy",
+    "email": "anya@yahoo.com",
+    "phoneNumber": "65443135113",
+    "imageUrl": "https://media.vanityfair.com/photos/5c7c2d1bfaa84649abb66b78/master/w_768,c_limit/shutterstock_editorial_9705470cf_huge.jpg",
+    "address": {
+        "country": "USA",
+        "city": "Los Angeles",
+        "street": "lioilud",
+        "streetNumber": "15"
+    },
+    "createdAt": "2025-12-06T00:12:44.014Z",
+    "updatedAt": "2025-12-06T00:12:44.014Z",
+    "_id": "fbc5be85-8c59-40e6-b101-1c2beb7543f3"
   }
 }
