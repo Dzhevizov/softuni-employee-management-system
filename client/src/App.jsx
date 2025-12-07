@@ -4,21 +4,25 @@ import Header from "./components/Header"
 import Pagination from "./components/Pagination"
 import SearchForm from "./components/SearchForm"
 import UserList from "./components/UserList"
-import CreateUserModal from "./components/CreateUserModal"
+import UserCreateModal from "./components/UserCreateModal"
 
 function App() {
   const [showCreateUser, setShowCreateUser] = useState(false);
   const [users, setUsers] = useState([]);
-  const [forceRefresh, setForceRefresh] = useState(true);
+  const [refresh, setRefresh] = useState(true);
 
-    useEffect(() => {
-      fetch('http://localhost:3030/jsonstore/users')
-        .then(response => response.json())
-        .then(data => {
-            setUsers(Object.values(data));
-        })
-        .catch(err => alert(err.message));
-    }, [forceRefresh]);
+  useEffect(() => {
+    fetch('http://localhost:3030/jsonstore/users')
+      .then(response => response.json())
+      .then(data => {
+          setUsers(Object.values(data));
+      })
+      .catch(err => alert(err.message));
+  }, [refresh]);
+
+  const forceRefresh = () => {
+    setRefresh(state => !state);
+  };
 
   const addUserClickHandler = () => {
     setShowCreateUser(true);
@@ -53,7 +57,7 @@ function App() {
     })
       .then(() => {
         closeUserModalHandler();
-        setForceRefresh(state => !state)
+        forceRefresh();
     })
       .catch(err => alert(err.message))
   };
@@ -66,7 +70,7 @@ function App() {
         <section className="card users-container">
           <SearchForm />
 
-          <UserList users={users}/>
+          <UserList users={users} forceRefresh={forceRefresh}/>
 
           <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
 
@@ -74,7 +78,7 @@ function App() {
         </section>
 
         {showCreateUser && 
-          <CreateUserModal 
+          <UserCreateModal 
             onClose={closeUserModalHandler}
             onSubmit={addUserSubmitHandler}
           />

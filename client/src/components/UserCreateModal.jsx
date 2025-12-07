@@ -1,4 +1,4 @@
-export default function CreateUserModal({
+export default function UserCreateModal({
     onClose,
     onSubmit,
 }) {
