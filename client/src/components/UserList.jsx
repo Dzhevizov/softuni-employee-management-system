@@ -13,7 +13,7 @@ export default function UserList({
         setSelectedUserId(userId);
     }
 
-    const closeModalHandler () => {
+    const closeModalHandler = () => {
         setShowUserDetails(false);
     }
 
