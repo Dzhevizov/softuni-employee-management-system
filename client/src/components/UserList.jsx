@@ -2,6 +2,7 @@ import { useState } from "react";
 import UserDetailsModal from "./UserDetailsModal";
 import UserItem from "./UserItem";
 import UserDeleteModal from "./UserDeleteModal";
+import UserSaveModal from "./UserSaveModal";
 
 export default function UserList({
     users,
@@ -9,6 +10,7 @@ export default function UserList({
 }) {
     const [showUserDetails, setShowUserDetails] = useState(false);
     const [showUserDelete, setShowUserDelete] = useState(false);
+    const [showUserEdit, setShowUserEdit] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
 
     const detailsActionClickHandler = (userId) => {
@@ -21,11 +23,47 @@ export default function UserList({
         setSelectedUserId(userId);
     };
 
+    const editActionClickHandler = (userId) => {
+        setShowUserEdit(true);
+        setSelectedUserId(userId);
+    };
+
     const closeModalHandler = () => {
         setShowUserDetails(false);
         setShowUserDelete(false);
+        setShowUserEdit(false);
         setSelectedUserId(null);
+        forceRefresh();
     };
+
+    const editUserHandler = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const {country, city, street, streetNumber, ...userData} = Object.fromEntries(formData);
+        userData.address = {
+            country,
+            city,
+            street,
+            streetNumber
+        };
+
+        userData.updatedAt = new Date().toISOString();
+
+        try {
+            await fetch(`http://localhost:3030/jsonstore/users/${selectedUserId}`, {
+                method: 'PATCH',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
+            closeModalHandler();
+        } catch (err) {
+            alert(err.message);
+        }
+    }
 
     return (
         <div className="table-wrapper">
@@ -91,6 +129,7 @@ export default function UserList({
                             key={user._id} 
                             onDetailsClick={detailsActionClickHandler}
                             onDeleteClick={deleteActionClickHandler}
+                            onEditClick={editActionClickHandler}
                         />
                     )}                                 
                 </tbody>
@@ -107,7 +146,15 @@ export default function UserList({
                 <UserDeleteModal 
                     userId={selectedUserId}
                     onClose={closeModalHandler}
-                    forceRefresh={forceRefresh}
+                />
+            }
+
+            {showUserEdit &&
+                <UserSaveModal
+                    isEditMode 
+                    userId={selectedUserId}
+                    onClose={closeModalHandler}
+                    onSubmit={editUserHandler}
                 />
             }
             
