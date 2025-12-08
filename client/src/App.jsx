@@ -62,6 +62,14 @@ function App() {
       .catch(err => alert(err.message))
   };
 
+  const sortUsersHandler = (sortDirection) => {
+    if(sortDirection) {
+      setUsers(state => [...state].sort((userA, userB) => new Date(userA.createdAt) - new Date(userB.createdAt)));
+    } else {
+      setUsers(state => [...state].sort((userA, userB) => new Date(userB.createdAt) - new Date(userA.createdAt)));
+    }
+  }
+
   return (
     <>
       <Header />
@@ -70,7 +78,11 @@ function App() {
         <section className="card users-container">
           <SearchForm />
 
-          <UserList users={users} forceRefresh={forceRefresh}/>
+          <UserList 
+            users={users}
+            onSortUsers={sortUsersHandler}
+            forceRefresh={forceRefresh}
+          />
 
           <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
 
